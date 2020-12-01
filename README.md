@@ -12,3 +12,7 @@
 - Design a model to detect if a policy holder will make a service payment call.
 - Send marketing material to entice the policy holder to use our self service payment channels.
 
+<p>
+    <img src=images/Objective_steps.PNG alt>
+</p>
+
