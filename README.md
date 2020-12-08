@@ -1,4 +1,5 @@
-# Marketing Email Campaign
+# Policy Holder payment call propensity
+## A Marketing Email Campaign
 
 <p>
     <img src=https://storage.googleapis.com/sales.appinst.io/2016/07/8-Strategies-You-Can-Learn-From-These-Great-Email-Campaigns-2.png alt>
@@ -69,3 +70,76 @@ Attempted to remove the intersection between these features but the correlation 
 <p>
     <img src=images/ageXtenure.png alt>
 </p>
+
+<table>
+  <tr>
+    <th><img src=images/policy_age.png alt></th>
+    <th><img src=images/CancelationXage.png alt></th>
+  </tr>
+</table>
+
+### Service Calls- Class Imblanace
+
+There is significant class imbalance in the dataset that we will neeed to deal with when creating the predictive model(s).
+
+<table>
+  <tr>
+    <th><img src=images/service_call_plt.png style="width:50px;"></th>
+    <th><img src=images/days_of_week.png alt></th>
+  </tr>
+</table>
+
+### Prediction Summary (baseline) - Heldout test set
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Balanced Class</th>
+    <th>Cross Val</th>
+    <th>Feature Engineering</th>
+    <th>Roc AUC</th>
+    <th>Precision-Recall AUC</th>
+    <th>Runtime</th>
+  </tr>
+  <tr>
+    <td>Logistic Regression(baseline)</td>
+    <td align='center'>&#10003</td>
+    <td></td>
+    <td></td>
+    <td>0.78</td>
+    <td>0.12</td>
+    <td>Neglibile</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th><img src=images/Baseline_Logistic_ROC.png></th>
+    <th><img src=images/Baseline_Logistic_PR.png></th>
+  </tr>
+</table>
+
+The ROC curve is an optimistic measure for an imbalanced class. Recall that the ROC curve measures how well the model is distinguishing both classes, but due to the over representation of the negative class, the FPT will be low for many thresholds while the TPR increases steadily. This type of measure does not tell us how well we are doing at correctly classifyin the treu cases.
+
+The Precision-Recall curve demonstrates how well our model is doing at correctly detecting positive sample on two front:
+
+- % of predicted (+) classes that are correct
+- % of (+) cases that we correctly identify
+
+### Modeling Pipeline
+
+Can we do better?
+
+A modeling pipeline is developed to enhance model performance. The pipeline will create multiple models for a set of hyperparameters and then choose the best performing combination of parameters on the validation set.
+
+![](https://github.com/StevenLoaiza/Marketing/blob/main/images/Model%20Pipelne.png?raw=true)
+
+### Feature Engineering
+Below is a list with explanations of each new feature.
+
+- Cancel_autom: Cancelled automated payments (0/1)
+- SSP_6M: Percent of self-service payment in the last 6 months.
+- SSP_15d: Was the payment made in the last 15 days potentially made through SSC? (0/1)
+- Day : Day of the week for the transaction.
+- State_grp : Rated State grouped by (ascending) Call_Flag=1.
+
+### Final model outputs
