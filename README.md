@@ -1,4 +1,4 @@
-# Policy Holder payment call propensity
+# Policyholder payment call propensity score
 ## A Marketing Email Campaign
 
 <p>
@@ -10,8 +10,8 @@
 
 ## Objective
 
-- Design a model to detect if a policy holder will make a service payment call.
-- Send marketing material to entice the policy holder to use our self service payment channels.
+- Design a model to detect if a policyholder will make a service payment call.
+- Send marketing material to entice the policyholder to use our self-service payment channels.
 
 <p>
     <img src=images/Objective_steps.PNG alt>
