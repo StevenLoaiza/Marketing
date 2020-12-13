@@ -143,3 +143,110 @@ Below is a list with explanations of each new feature.
 - State_grp : Rated State grouped by (ascending) Call_Flag=1.
 
 ### Final model outputs
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Balanced Class</th>
+    <th>Cross Val</th>
+    <th>Feature Engineering</th>
+    <th>Roc AUC</th>
+    <th>Precision-Recall AUC</th>
+    <th>Runtime</th>
+  </tr>
+  <tr>
+    <td>Logistic Regression(baseline)</td>
+    <td align='center'>&#10003</td>
+    <td></td>
+    <td></td>
+    <td>0.78</td>
+    <td>0.12</td>
+    <td>Neglibile</td>
+  </tr>
+    <tr>
+    <td>Logistic Regression v2</td>
+    <td align='center'>&#10003</td>
+    <td align='center'>&#10003</td>
+    <td align='center'>&#10003</td>
+    <td>0.83</td>
+    <td>0.23</td>
+    <td>18.3 min</td>
+  </tr>
+    <tr>
+    <td>Random Forest</td>
+    <td align='center'>&#10003</td>
+    <td align='center'>&#10003</td>
+    <td align='center'>&#10003</td>
+    <td>0.84</td>
+    <td>0.24</td>
+    <td>46.5 min</td>
+  </tr>
+    <tr>
+    <td>XgBoost</td>
+    <td align='center'>&#10003</td>
+    <td align='center'>&#10003</td>
+    <td align='center'>&#10003</td>
+    <td>0.87</td>
+    <td>0.27</td>
+    <td>4.9 min</td>
+  </tr>
+</table>
+
+The hyper parameters tuned in the XGboost model (Optimal Performance and quickest runtime) are Number of Subsamples, Max features, depth, class positive weight.
+
+<table>
+  <tr>
+    <th><img src=images/XGboost_ROC.png></th>
+    <th><img src=images/XGboost_PR.png></th>
+  </tr>
+</table>
+
+## Feature Importance- SHAPE Vaules
+
+**Interpreting the plot**
+- The feature are in descending order of importance.
+- The distance from the center line show the pull toward lower (left) or higher (right) propensity to call.
+- The gradient colors represent the feature value {blue: lower, magenta: higher}
+
+Note: SHAP quantifies the contribution that each feature bring to the prediction made by the model.
+
+Pros:
+Shows the direction of influence
+More info than standard importance plots
+
+Cons:
+Computation time increase with the number of coalitions (number of combinations).
+Local interpretation only for the training dataset.
+Does note tell us a marginal change in the global sense, like a parameter value in a linear regression.
+
+![](https://github.com/StevenLoaiza/Marketing/blob/main/images/SHAP_values.png?raw=true)
+
+## Model Deployment
+
+Scoring Threshold Is pending – will need to discuss with the business to determine a meaningful threshold keeping in mind the tradeoff between precision and recall. 
+
+There are two objectives we would like to monitor:
+- Is the model performing well
+- Is the campaign performing well
+
+Each objective has opposing wants, if the campaign works well then we cant validate the model because everyone would pay online.
+
+Instead we can randomly assign policy holders to two groups, control group and experiment group.
+
+Control group: receive no email, can be used to monitor model performance
+Experiment Group: The will receive the email to pay on SSC.
+
+![](https://github.com/StevenLoaiza/Marketing/blob/main/images/model_deploy.PNG?raw=true)
+
+## Next Steps
+- Model v2. (Gather a larger history of payment data)
+- Present the model to our business stakeholders and determine an acceptable threshold (trade-off  precision and recall)
+- Discuss the format for the return scores (binary variable, return the model score, segmentation (No, Low, Med, High))
+
+## Appendix
+
+### Choose Threshold
+Interpreting the chart
+- At each threshold we calculate the precision and recall for the positive class.
+- There will be a tradeoff, as we increase/decrease the threshold.
+
+![](https://github.com/StevenLoaiza/Marketing/blob/main/images/threshold_chrt.PNG?raw=true)
